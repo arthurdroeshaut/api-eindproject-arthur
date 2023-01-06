@@ -1,18 +1,54 @@
 from pydantic import BaseModel
+from models import Character as CharacterModel, Movie as MovieModel, Vehicle as VehicleModel
 
 
-class ItemBase(BaseModel):
-    title: str
-    description: str | None = None
+class CharacterBase(BaseModel):
+    name: str
+    species: str
+    birthplace: str
+    lightsaber_color: str | None = None
 
 
-class ItemCreate(ItemBase):
+class CharacterCreate(CharacterBase):
     pass
 
 
-class Item(ItemBase):
+class Character(CharacterBase):
     id: int
-    owner_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class MovieBase(BaseModel):
+    title: str
+    release_date: str
+    director: str
+
+
+class MovieCreate(MovieBase):
+    pass
+
+
+class Movie(MovieBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class VehicleBase(BaseModel):
+    name: str
+    type: str
+    affiliation: str
+
+
+class VehicleCreate(VehicleBase):
+    pass
+
+
+class Vehicle(VehicleBase):
+    id: int
 
     class Config:
         orm_mode = True
@@ -28,8 +64,6 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    is_active: bool
-    items: list[Item] = []
 
     class Config:
         orm_mode = True

@@ -1,20 +1,22 @@
+import random
+from passlib.hash import pbkdf2_sha256
 from fastapi import Depends, FastAPI, HTTPException
+from pydantic import ValidationError
 from sqlalchemy.orm import Session
-
-import os
-import crud
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+import auth
 import models
+import crud
 import schemas
+from schemas import CharacterCreate, Character, MovieCreate, Movie, VehicleCreate, Vehicle
 from database import SessionLocal, engine
+import os
 
-print("We are in the main.......")
 if not os.path.exists('.\sqlitedb'):
-    print("Making folder.......")
     os.makedirs('.\sqlitedb')
 
-print("Creating tables.......")
+# "sqlite:///./sqlitedb/sqlitedata.db"
 models.Base.metadata.create_all(bind=engine)
-print("Tables created.......")
 
 app = FastAPI()
 
@@ -28,7 +30,32 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.User)
+# api routes
+
+
+# token route
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+@app.post("/token")
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    # Try to authenticate the user
+    user = auth.authenticate_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    # Add the JWT case sub with the subject(user)
+    access_token = auth.create_access_token(
+        data={"sub": user.email}
+    )
+    # Return the JWT as a bearer token to be placed in the headers
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+@app.post("/users/create", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -37,27 +64,90 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/users/", response_model=list[schemas.User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = crud.get_users(db, skip=skip, limit=limit)
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    users = crud.get_user(db, skip=skip, limit=limit)
     return users
 
 
-@app.get("/users/{user_id}", response_model=schemas.User)
-def read_user(user_id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_user(db, user_id=user_id)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return db_user
+# alle get routes
 
 
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_item(db=db, item=item, user_id=user_id)
+@app.get("/characters/random/name")
+def get_random_character_name(db: Session = Depends(get_db)):
+    character_count = db.query(models.Character).count()
+    random_character_id = random.randint(1, character_count)
+    random_character = db.query(models.Character).filter(models.Character.id == random_character_id).first()
+    return random_character.name
 
 
-@app.get("/items/", response_model=list[schemas.Item])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_items(db, skip=skip, limit=limit)
-    return items
+@app.get("/movies/random/title")
+def get_random_movie_title(db: Session = Depends(get_db)):
+    movie_count = db.query(models.Movie).count()
+    random_movie_title = random.randint(1, movie_count)
+    random_movie = db.query(models.Movie).filter(models.Movie.title == random_movie_title).first()
+    return random_movie.title
+
+
+@app.get("/vehicles/random/type")
+def get_random_vehicle_type(db: Session = Depends(get_db)):
+    vehicle_count = db.query(models.Vehicle).count()
+    random_vehicle_type = random.randint(1, vehicle_count)
+    random_vehicle = db.query(models.Vehicle).filter(models.Vehicle.type == random_vehicle_type).first()
+    return random_vehicle.type
+
+
+# alle post routes
+
+
+@app.post("/characters")
+def create_character(character: CharacterCreate, db: Session = Depends(get_db)):
+    db_character = models.Character(**character.dict())
+    db.add(db_character)
+    db.commit()
+    db.refresh(db_character)
+    return db_character
+
+
+@app.post("/vehicles")
+def create_vehicle(vehicle: VehicleCreate, db: Session = Depends(get_db)):
+    new_vehicle = models.Vehicle(**vehicle.dict())
+    db.add(new_vehicle)
+    db.commit()
+    db.refresh(new_vehicle)
+    return new_vehicle
+
+
+@app.post("/movies")
+def create_movie(movie: MovieCreate, db: Session = Depends(get_db)):
+    new_movie = models.Movie(**movie.dict())
+    db.add(new_movie)
+    db.commit()
+    db.refresh(new_movie)
+    return new_movie
+
+
+# om een karakter met een bepaald ID te updaten
+
+
+@app.put("/characters/{character_id}")
+def update_character(characterid: int, character: models.CharacterUpdateSchema):
+    try:
+        # Update character in database
+        updated_character = models.CharacterUpdateSchema(**character.dict())
+        return updated_character
+    except ValidationError as e:
+        raise HTTPException(status_code=400, detail=e.errors())
+
+
+# om een voertuig te verwijderen op basis van zijn ID
+
+
+@app.delete("/vehicles/{vehicle_id}")
+def delete_vehicle(vehicle_id: int, db: Session = Depends(get_db)):
+    vehicle = db.query(models.Vehicle).filter(models.Vehicle.id == vehicle_id).first()
+    if vehicle:
+        db.delete(vehicle)
+        db.commit()
+        return {"message": "Successfully deleted vehicle."}
+    else:
+        return {"message": "Vehicle not found."}
