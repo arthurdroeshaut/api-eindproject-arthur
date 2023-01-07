@@ -1,6 +1,7 @@
 import random
 from passlib.hash import pbkdf2_sha256
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -12,6 +13,7 @@ from schemas import CharacterCreate, Character, MovieCreate, Movie, VehicleCreat
 from database import SessionLocal, engine
 import os
 
+
 if not os.path.exists('.\sqlitedb'):
     os.makedirs('.\sqlitedb')
 
@@ -19,6 +21,22 @@ if not os.path.exists('.\sqlitedb'):
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "https://localhost.tiangolo.com",
+    "http://127.0.0.1:5500",
+    "https://arthurdroeshaut.github.io"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Dependency
