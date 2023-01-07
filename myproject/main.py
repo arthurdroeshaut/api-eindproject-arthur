@@ -152,9 +152,10 @@ def update_character(characterid: int, character: models.CharacterUpdateSchema):
     try:
         # Update character in database
         updated_character = models.CharacterUpdateSchema(**character.dict())
-        return updated_character
+        return {"message": "Successfully updated character", "updated_character": updated_character}
     except ValidationError as e:
         raise HTTPException(status_code=400, detail=e.errors())
+
 
 
 # om een voertuig te verwijderen op basis van zijn ID
