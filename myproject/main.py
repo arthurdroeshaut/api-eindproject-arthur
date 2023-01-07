@@ -124,7 +124,7 @@ def get_random_vehicle_type(db: Session = Depends(get_db)):
 # alle post routes
 
 
-@app.post("/characters")
+@app.post("/character/create")
 def create_character(character: CharacterCreate, db: Session = Depends(get_db)):
     db_character = models.Character(**character.dict())
     db.add(db_character)
@@ -133,7 +133,7 @@ def create_character(character: CharacterCreate, db: Session = Depends(get_db)):
     return db_character
 
 
-@app.post("/vehicles")
+@app.post("/vehicle/create")
 def create_vehicle(vehicle: VehicleCreate, db: Session = Depends(get_db)):
     new_vehicle = models.Vehicle(**vehicle.dict())
     db.add(new_vehicle)
@@ -142,7 +142,7 @@ def create_vehicle(vehicle: VehicleCreate, db: Session = Depends(get_db)):
     return new_vehicle
 
 
-@app.post("/movies")
+@app.post("/movies/create")
 def create_movie(movie: MovieCreate, db: Session = Depends(get_db)):
     new_movie = models.Movie(**movie.dict())
     db.add(new_movie)
