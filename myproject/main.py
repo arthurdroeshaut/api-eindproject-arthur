@@ -103,6 +103,8 @@ def get_random_movie_title(db: Session = Depends(get_db)):
     movie_count = db.query(models.Movie).count()
     random_movie_title = random.randint(1, movie_count)
     random_movie = db.query(models.Movie).filter(models.Movie.title == random_movie_title).first()
+    if random_movie is None:
+        return "No movies found in the database"
     return random_movie.title
 
 
