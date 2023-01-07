@@ -10,12 +10,14 @@ alle nodige links geef ik hier ook nog even weer:
 algemene eisen: 
 
 api op github: https://github.com/arthurdroeshaut/api-eindproject-arthur
+
 okteto hosted : https://system-service-arthurdroeshaut.cloud.okteto.net/(endpoints here)
 
 
 gekozen uitbreiding: ik heb gekozen voor de Frontend + hosting op netlify als uitbreidingn
 
 front-end op github: https://github.com/arthurdroeshaut/api-eindproject-frontend
+
 website op netlify: https://exquisite-jalebi-13c555.netlify.app/
 
 korte uitleg endpoints. 
