@@ -1,7 +1,7 @@
 version: "3.9"
 services:
  system-service:
-  image: arthurdroeshaut/api-eindproject-arthur
+  image: r0750378/api-eindproject-arthur
   ports:
     - "8000:8000"
   volumes:
