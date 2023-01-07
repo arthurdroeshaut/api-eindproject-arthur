@@ -26,6 +26,7 @@ origins = [
     "http://localhost",
     "http://localhost:8000",
     "https://localhost.tiangolo.com",
+    "http://127.0.0.1:8000",
     "http://127.0.0.1:5500",
     "https://arthurdroeshaut.github.io"
 ]
@@ -113,8 +114,8 @@ def get_random_movie_title(db: Session = Depends(get_db)):
 @app.get("/vehicles/random/type")
 def get_random_vehicle_type(db: Session = Depends(get_db)):
     vehicle_count = db.query(models.Vehicle).count()
-    random_vehicle_type = random.randint(1, vehicle_count)
-    random_vehicle = db.query(models.Vehicle).filter(models.Vehicle.type == random_vehicle_type).first()
+    random_vehicle_id = random.randint(1, vehicle_count)
+    random_vehicle = db.query(models.Vehicle).filter(models.Vehicle.id == random_vehicle_id).first()
     if random_vehicle is None:
         return "No vehicles found in the database"
     return random_vehicle.type
