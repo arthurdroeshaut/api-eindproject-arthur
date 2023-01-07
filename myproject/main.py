@@ -135,7 +135,7 @@ def create_vehicle(vehicle: VehicleCreate, db: Session = Depends(get_db)):
     return new_vehicle
 
 
-@app.post("/movies/create")
+@app.post("/movie/create")
 def create_movie(movie: MovieCreate, db: Session = Depends(get_db)):
     new_movie = models.Movie(**movie.dict())
     db.add(new_movie)
