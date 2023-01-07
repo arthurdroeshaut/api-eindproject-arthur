@@ -95,6 +95,8 @@ def get_random_character_name(db: Session = Depends(get_db)):
     character_count = db.query(models.Character).count()
     random_character_id = random.randint(1, character_count)
     random_character = db.query(models.Character).filter(models.Character.id == random_character_id).first()
+    if random_character is None:
+        return "No characters found in the database"
     return random_character.name
 
 
@@ -113,6 +115,8 @@ def get_random_vehicle_type(db: Session = Depends(get_db)):
     vehicle_count = db.query(models.Vehicle).count()
     random_vehicle_type = random.randint(1, vehicle_count)
     random_vehicle = db.query(models.Vehicle).filter(models.Vehicle.type == random_vehicle_type).first()
+    if random_vehicle is None:
+        return "No vehicles found in the database"
     return random_vehicle.type
 
 
