@@ -91,10 +91,75 @@ als voorbeeld json hiervan:
 
 <img width="202" alt="image" src="https://user-images.githubusercontent.com/61418112/211171396-58b0c992-8035-49ff-bd61-08917a1100a0.png">
 
+en op de website staan alle 3 de post requests en ziet dit er zo uit voor de request:
+
+<img width="231" alt="image" src="https://user-images.githubusercontent.com/61418112/211171734-3d90259c-4bc6-4841-8308-8addabc9e8f1.png">
+
+
+en zo ziet het eruit na de request:
+
+<img width="235" alt="image" src="https://user-images.githubusercontent.com/61418112/211171704-273b5339-2dbf-4ba4-ab40-c30ead6e3ea6.png">
 
 
 
+nu ga ik nog overgaan op de delete en put endpoints, deze zijn niet aanwezig in de website maar kan ik wel laten zien.
 
+in fastapi:
+
+<img width="719" alt="image" src="https://user-images.githubusercontent.com/61418112/211171751-54dd0a47-c95b-4d79-ab3b-160a0336cec3.png">
+
+als eerste de put endpoint, deze put endpoint laat mij een ID ingeven en door deze ID in te geven kan ik de inhoud van deze ID aanpassen.
+zoals je hieronder ziet heb ik characterID 2 ingevuld, nu kan ik hieronder de body aanpassen naar wat ik ervan wil maken in dit geval maak dit van:
+
+<img width="718" alt="image" src="https://user-images.githubusercontent.com/61418112/211171809-75ad19db-9f6e-4166-a90c-49af7b7b25d6.png">
+
+als dit werkt krijg je dit als response:
+
+<img width="710" alt="image" src="https://user-images.githubusercontent.com/61418112/211171826-66f2e109-cbcf-4a7e-96e4-4b646fd23bbd.png">
+
+nu voor de delete endpoint, hiermee kunnen we een voertuig compleet verwijderen uit de lijst op basis van hun ID, in het voorbeeld hieronder heb ik vehicle_id 3 verwijdert, dus nu zal vehicle met id 3 niet meer aanwezig zijn, tot we een nieuwe vehicle aanmaken. aangezien dat id 3 nu terug beschikbaar is.
+
+<img width="532" alt="image" src="https://user-images.githubusercontent.com/61418112/211171852-202a6011-d369-4992-896d-6e122c0c2e6e.png">
+
+
+
+nu hier komt het hasing & Oath gedeelte deels terug:
+in de users & token endpoints.
+
+dit is een endpoint en die geeft je een token waarmee jij aan versleutelde "data kan geraken zoals hier in deze foto staat een sleutel, hier kan je niet in zonder token, een token krijg je op deze manier:
+
+foto versleutelde "data": je ziet de sleuter achter read users staan, omdat onze users hun data niet door iedereen gezien mag worden.
+
+<img width="541" alt="image" src="https://user-images.githubusercontent.com/61418112/211171981-fb4c8da1-ab42-4684-8b00-ab4dec42749f.png">
+
+hoe je aan deze sleuten komt is zo:
+1. eerst doe je een user create
+
+<img width="537" alt="image" src="https://user-images.githubusercontent.com/61418112/211172072-4e7671ca-3b4e-46db-a12d-ae563b0bbe16.png">
+
+hierna doe je de /token endpoint en hier geef je je inloggegevens weer: 
+
+<img width="540" alt="image" src="https://user-images.githubusercontent.com/61418112/211172090-58daa922-ddf8-4648-8324-60d1dcd7bd77.png">
+
+
+als dit is gelukt krijg je hieronder je token te zien:
+
+<img width="534" alt="image" src="https://user-images.githubusercontent.com/61418112/211172103-20889d82-5698-4396-a6db-126b504f4d18.png">
+
+
+met deze token kun je je versleutelde gegevens bekijken, nu in mijn geval is dit niet veel want ik heb niet veel versleutelde gegevens.
+
+<img width="640" alt="image" src="https://user-images.githubusercontent.com/61418112/211172220-23f42056-494a-4d64-b047-0063ce9233b7.png">
+
+wat er gebeurt als je probeert de gegevens te bekijken zonder token:
+
+<img width="637" alt="image" src="https://user-images.githubusercontent.com/61418112/211172250-a82e023e-199b-4270-9ac5-942c250f72ab.png">
+
+
+dit waren al mijn endpoints en mijn website heb ik ook kunnen aantonen hoe deze werkt.
+ik heb dus de volledige basis eisen gemaakt, en de frontend + netlify als extra eisen.
+ik heb ook een beetje styling gedaan.
+dus mijn maximumscore is 85%
 
 
 
