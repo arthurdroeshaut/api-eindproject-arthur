@@ -1,74 +1,63 @@
 {
     "characters": [
         {
-            "Character_id": 1,
             "name": "Anakin Skywalker",
             "Species": "Human",
             "Birthplace": "Tattooine",
             "lightsaber_color": "green"
         },
         {
-            "character_id": 2,
             "name": "Obi-Wan-Kenobi",
-            "specie": "Human",
+            "species": "Human",
             "birthplace": "Stewjon",
             "lightsaber_color": "blue"
         },
         {
-            "character_id": 3,
             "name": "Chewbacca",
-            "specie": "Wookee",
+            "species": "Wookee",
             "birthplace": "Kashyyyk",
             "lightsaber_color": "none"
         },
         {
-            "character_id": 4,
             "name": "Ahsoka Tano",
-            "specie": "Togruta",
+            "species": "Togruta",
             "birthplace": "Shili",
             "lightsaber_color": "green"
         },
         {
-            "character_id": 5,
             "name": "Darth Vader",
-            "specie": "Human/cyborg",
+            "species": "Human/cyborg",
             "birthplace": "tattooine",
             "lightsaber_color": "red"
         }
     ],
     "movies": [
         {
-            "Movie_id": 1,
             "Title": "Star Wars: Episode I - The Phantom Menace",
             "Release_Date": "19-05-1999",
             "Director": "George lucas"
         },
         {
-            "Movie_id": 2,
             "Title": "Star Wars: Episode II - The Phantom Menace",
             "Release_Date": "16-05-2002",
             "Director": "George Lucas"
         },
         {
-            "Movie_id": 3,
             "Title": "Star Wars: Episode III: Revenge of the Sith",
             "Release_Date": "19-05-2005",
             "Director": "George Lucas"
         },
         {
-            "Movie_id": 4,
             "Title": "Star Wars: Episode IV - A New Hope",
             "Release_Date": "25-05-1977",
             "Director": "George Lucas"
         },
         {
-            "Movie_id": 5,
             "Title": "Star Wars: Episode V - The Empire Strikes Back",
             "Release_Date": "21-05-1980",
             "Director": "George Lucas"
         },
         {
-            "Movie_id": 6,
             "Title": "Star Wars: Episode VI - Return of the Jedi",
             "Release_Date": "25-05-1983",
             "Director": "George Lucas"
@@ -76,31 +65,26 @@
     ],
     "vehicles": [
         {
-            "vehicle_id": 1,
             "name": "X-Wing",
             "type": "Starfighter",
             "affiliation": "Rebel Alliance"
         },
         {
-            "vehicle_id": 2,
             "name": "Star Destroyer",
             "type": "Capital Ship",
             "affiliation": "Galactic Republic"
         },
         {
-            "vehicle_id": 3,
             "name": "Millennium Falcon",
             "type": "Light Freighter",
             "affiliation": "Rebel Alliance"
         },
         {
-            "vehicle_id": 4,
             "name": "Imperial Light Cruiser",
             "type": "Capital Ship",
             "affiliation": "Galactic Empire"
         },
         {
-            "vehicle_id": 5,
             "name": "TIE Fighter",
             "type": "Starfighter" ,
             "affiliation": "New Order"
