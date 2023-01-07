@@ -22,14 +22,8 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "https://localhost.tiangolo.com",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:5500",
-    "https://arthurdroeshaut.github.io"
-]
+origins = ["*"]
+
 
 app.add_middleware(
     CORSMiddleware,
